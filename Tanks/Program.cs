@@ -1,8 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Tanks.Controller;
+using Tanks.Model;
+using Tanks.View;
 
 namespace Tanks
 {
@@ -16,7 +20,12 @@ namespace Tanks
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+
+            PlayingField playingField = new PlayingField(new Size(10, 10), 27, 50, 5);
+            FieldView fieldView = new FieldView(playingField.Size);
+            PacmanController pacmanContorller = new PacmanController(playingField, fieldView);
+
+            Application.Run(fieldView.Form);
         }
     }
 }

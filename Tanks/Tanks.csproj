@@ -46,14 +46,39 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controller\PacmanController.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Model\Apple.cs" />
+    <Compile Include="Model\Bullet.cs" />
+    <Compile Include="Model\Enity.cs" />
+    <Compile Include="Model\Item.cs" />
+    <Compile Include="Model\Kolobok.cs" />
+    <Compile Include="Model\PlayingField.cs" />
+    <Compile Include="Model\Tank.cs" />
+    <Compile Include="Model\Wall.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="View\AppleView.cs" />
+    <Compile Include="View\BulletView.cs" />
+    <Compile Include="View\EnityView.cs" />
+    <Compile Include="View\FieldView.cs" />
+    <Compile Include="View\KolobokView.cs" />
+    <Compile Include="View\Statictic.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\Statictic.Designer.cs">
+      <DependentUpon>Statictic.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\TankView.cs" />
+    <Compile Include="View\WallView.cs" />
+    <EmbeddedResource Include="Form1.resx">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -63,6 +88,10 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="View\Statictic.resx">
+      <DependentUpon>Statictic.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="Properties\DataSources\Tanks.Model.Item.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -75,6 +104,27 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Resources\apple.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\bullet.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\level.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\tank.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\tank1.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\wall.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
