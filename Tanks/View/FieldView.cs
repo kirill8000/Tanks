@@ -28,52 +28,46 @@ namespace Tanks.View
 
         public void Draw(PlayingField field)
         {
-            try
+            var bitmap = new Bitmap(field.Size.Width, field.Size.Height);
+            var graphics = Graphics.FromImage(bitmap);
+
+            foreach (var apple in field.Apples)
             {
-                if (!Form.IsDisposed && !Form.PictureBox.IsDisposed)
+                AppleView.Instance.Draw(graphics, apple);
+            }
+
+            KolobokView.Instance.Draw(graphics, field.Kolobok);
+
+            foreach (var bullet in field.TanksBullets)
+            {
+                BulletView.Instance.Draw(graphics, bullet);
+            }
+
+            foreach (var tank in field.Tanks)
+            {
+                TankView.Instance.Draw(graphics, tank);
+            }
+
+            foreach (var bullet in field.KolobokBullets)
+            {
+                BulletView.Instance.Draw(graphics, bullet);
+            }
+
+            foreach (var wall in field.Wall)
+            {
+                WallView.Instance.Draw(graphics, wall);
+            }
+
+            KolobokView.Instance.Draw(graphics, field.Kolobok);
+
+            if (!Form.IsDisposed && !Form.PictureBox.IsDisposed)
                 {
                     Form.Invoke((MethodInvoker)delegate
                     {
-
-                        Graphics.FromImage(Form.PictureBox.Image).Clear(Color.White);
-
-                        foreach (var apple in field.Apples)
-                        {
-                            AppleView.Instance.Draw(Form.PictureBox, apple);
-                        }
-
-                        KolobokView.Instance.Draw(Form.PictureBox, field.Kolobok);
-                        
-                        foreach (var bullet in field.TanksBullets)
-                        {
-                            BulletView.Instance.Draw(Form.PictureBox, bullet);
-                        }
-
-                        foreach (var tank in field.Tanks)
-                        {
-                            TankView.Instance.Draw(Form.PictureBox, tank);
-                        }
-
-                        foreach (var bullet in field.KolobokBullets)
-                        {
-                            BulletView.Instance.Draw(Form.PictureBox, bullet);
-                        }
-
-                        foreach (var wall in field.Wall)
-                        {
-                            WallView.Instance.Draw(Form.PictureBox, wall);
-                        }
-
-                        KolobokView.Instance.Draw(Form.PictureBox, field.Kolobok);
+                        Form.PictureBox.Image = bitmap;
                         Form.PictureBox.Invalidate();
-
                     });
                 }
-            }
-            catch
-            {
-
-            }
         }
 
         public void UpdateScore(int val)

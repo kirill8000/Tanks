@@ -78,7 +78,7 @@ namespace Tanks.Model
 
                 if (s[i] == 'w')
                 {
-                    _walls.Add(new Wall(_cellSize, CellLocation(x, y)));
+                    _walls.Add(new Wall(_cellSize, CellLocation(x, y), WallType.ShotThrough));
                     _grid[x, y] = true;
                 }
 
@@ -96,15 +96,23 @@ namespace Tanks.Model
             }
         }
 
-        private bool Collides(Item item, IEnumerable<Item> items)
+        private int CollidesIndex(Item item, IEnumerable<Item> items)
         {
-            foreach(var i in items)
+            int index = 0;
+            foreach (var i in items)
             {
                 if (i.IntersectsWith(item))
-                    return true;
+                    return index;
+
+                index++;
             }
 
-            return false;
+            return -1;
+        }
+
+        private bool Collides(Item item, IEnumerable<Item> items)
+        {
+            return CollidesIndex(item, items) >= 0;
         }
 
         private bool CollidesWithWalls(Enity enity)
@@ -177,8 +185,18 @@ namespace Tanks.Model
         {
             for (int i = 0; i < bullets.Count; i++)
             {
-                if (CollidesWithBorders(bullets[i]))
+                int index = CollidesIndex(bullets[i], _walls);
+                if (index >= 0)
                 {
+                    if (_walls[index].WallType == WallType.Destructible)
+                    {
+                        _walls.RemoveAt(index);
+                    } 
+                    else if (_walls[index].WallType == WallType.ShotThrough)
+                    {
+                        continue;
+                    }
+                    
                     bullets.RemoveAt(i);
                     i--;
                 }
@@ -258,12 +276,22 @@ namespace Tanks.Model
                 GameOver?.Invoke(this, EventArgs.Empty);
         }
 
+        private void UpdateApples()
+        {
+            if (_apples.Count <= 4)
+            {
+                var cell = GetRandomCell();
+                _apples.Add(new Apple(_cellSize, CellLocation(cell.x, cell.y)));
+            }
+        }
+
         private void Update()
         {
             CheckGameOver();
             UpdadeBullets();
             UpdateKolobok();
-            UpdateTanks();         
+            UpdateTanks();
+            UpdateApples();
         }
 
         public void Stop()

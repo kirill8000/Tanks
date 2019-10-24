@@ -27,9 +27,8 @@ namespace Tanks.View
             }
         }
 
-        public void Draw(PictureBox pictureBox, Apple enity)
+        public void Draw(Graphics graphics, Apple enity)
         {
-            Graphics graphics = Graphics.FromImage(pictureBox.Image);
             graphics.DrawImage(_img, enity.Location);
         }
     }

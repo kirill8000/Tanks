@@ -55,10 +55,9 @@ namespace Tanks.View
 
             CurrentDirection = newDdirecton;
         }
-        public void Draw(PictureBox pictureBox, Enity enity)
+        public void Draw(Graphics graphics, Enity enity)
         {
             Rotate(enity.Directon);
-            Graphics graphics = Graphics.FromImage(pictureBox.Image);
             graphics.DrawImage(_img, enity.Location);
         }
     }
