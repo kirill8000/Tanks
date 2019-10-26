@@ -37,30 +37,14 @@ namespace Tanks.Controller
 
             };
 
-            field.Begin();
 
             field.GameOver += (o, s) =>
             {
-                field.Stop();
+                view.Form.Timer.Stop();
                 MessageBox.Show("Game over", "Info");
             };
 
-            field.ScoreUpdated += (o, s) =>
-            {
-                view.UpdateScore(field.Score);
-            };
-
-            field.Updated += (o, s) =>
-            {
-
-                view.statistic.Update(new BindingList<Tank>(field.Tanks));
-                view.Draw((PlayingField)o);
-            };
-
-            view.Form.FormClosing += (o, s) =>
-            {
-                field.Stop();
-            };
+            view.Form.Timer.Start();
         }
     }
 }

@@ -22,7 +22,6 @@ namespace Tanks.Model
         private List<Bullet> _tanksBulets = new List<Bullet>();
         private List<Bullet> _kolobokBulets = new List<Bullet>();
         private List<Apple> _apples = new List<Apple>();
-        private Timer timer;
 
 
         private bool[,] _grid;
@@ -35,9 +34,9 @@ namespace Tanks.Model
         public IReadOnlyCollection<Apple> Apples => _apples;
 
         public Kolobok Kolobok { get; }
-        public event EventHandler Updated;
         public event EventHandler GameOver;
         public event EventHandler ScoreUpdated;
+        public int UpdateInterval { get; }
         public int Score { get; private set; } = 0;
 
         private Point CellLocation(int x, int y)
@@ -78,13 +77,13 @@ namespace Tanks.Model
 
                 if (s[i] == 'w')
                 {
-                    _walls.Add(new Wall(_cellSize, CellLocation(x, y), WallType.ShotThrough));
+                    _walls.Add(new Wall(_cellSize, CellLocation(x, y)));
                     _grid[x, y] = true;
                 }
 
             }
         }
-        
+
         private void GenerateApples(int count)
         {
             for (int i = 0; i < count; i++)
@@ -191,12 +190,12 @@ namespace Tanks.Model
                     if (_walls[index].WallType == WallType.Destructible)
                     {
                         _walls.RemoveAt(index);
-                    } 
+                    }
                     else if (_walls[index].WallType == WallType.ShotThrough)
                     {
                         continue;
                     }
-                    
+
                     bullets.RemoveAt(i);
                     i--;
                 }
@@ -272,7 +271,7 @@ namespace Tanks.Model
 
         private void CheckGameOver()
         {
-            if (Collides(Kolobok, _tanksBulets) || Collides(Kolobok, _tanks)) 
+            if (Collides(Kolobok, _tanksBulets) || Collides(Kolobok, _tanks))
                 GameOver?.Invoke(this, EventArgs.Empty);
         }
 
@@ -285,23 +284,13 @@ namespace Tanks.Model
             }
         }
 
-        private void Update()
+        public void Update()
         {
             CheckGameOver();
             UpdadeBullets();
             UpdateKolobok();
             UpdateTanks();
             UpdateApples();
-        }
-
-        public void Stop()
-        {
-            timer.Stop();
-        }
-
-        public void Begin()
-        {
-            timer.Start();
         }
 
         private Kolobok CreateKolobok()
@@ -325,12 +314,8 @@ namespace Tanks.Model
             GenerateWalls();
             GenerateTanks(tanksCount);
             GenerateApples(5);
-            timer = new Timer(((double)1 / enitiesSpeed)*1000);
-            timer.Elapsed += (o, s) =>
-            {
-                Update();
-                Updated?.Invoke(this, EventArgs.Empty);
-            };
+            UpdateInterval = (int)(1000 / enitiesSpeed);
+
         }
 
     }

@@ -22,7 +22,7 @@ namespace Tanks
             Application.SetCompatibleTextRenderingDefault(false);
 
             PlayingField playingField = new PlayingField(new Size(10, 10), 27, 50, 5);
-            FieldView fieldView = new FieldView(playingField.Size);
+            FieldView fieldView = new FieldView(playingField, playingField.Size);
             PacmanController pacmanContorller = new PacmanController(playingField, fieldView);
 
             Application.Run(fieldView.Form);

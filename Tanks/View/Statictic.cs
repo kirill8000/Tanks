@@ -13,12 +13,13 @@ namespace Tanks.View
 {
     partial class Statictic : Form
     {
-        public void Update(BindingList<Tank> items)
+        public void Update(IList<Tank> items)
         {
+            var source = new BindingList<Tank>(items);
             Invoke((MethodInvoker)delegate
             {
 
-                 dataGridView1.DataSource = items;
+                 dataGridView1.DataSource = source;
                  dataGridView1.Invalidate();
 
 

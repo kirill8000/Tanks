@@ -15,7 +15,7 @@ namespace Tanks
     public partial class Form1 : Form
     {
         public PictureBox PictureBox;
-
+        public Timer Timer = new Timer();
         public Form1()
         {
             InitializeComponent();
