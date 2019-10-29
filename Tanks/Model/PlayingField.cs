@@ -252,10 +252,9 @@ namespace Tanks.Model
                 _kolobokBulets.Add(new Bullet(3, Kolobok));
                 _fire--;
             }
+            Kolobok.Move();
 
-            if (!CollidesWithBorders(Kolobok))
-                Kolobok.Move();
-            else
+            if (CollidesWithBorders(Kolobok))
                 Kolobok.MoveBack();
 
             for (int i = 0; i < _apples.Count; i++)
